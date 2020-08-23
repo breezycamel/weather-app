@@ -1,0 +1,14 @@
+body{
+	background-image: linear-gradient(rgb(51, 51, 112),white) ;
+	background-repeat: no-repeat;
+	height: 100%;
+}
+
+.App{
+	background-color: white;
+	max-width: 100%;
+	width: 800px;
+	margin: auto;
+	box-shadow: 2px 2px rgba(0, 0, 0, 0.075);
+	height:100%
+}
