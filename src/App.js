@@ -36,7 +36,7 @@ function App() {
 					.then(res=>res.json())
 					.then(data1 => {
 						console.log(data1);
-						setDaily(data1);
+						setDaily(data1.daily);
 					})
 					.then(()=>setGotDaily(true));
 			})
