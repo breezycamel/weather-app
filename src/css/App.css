@@ -12,3 +12,7 @@ body{
 	box-shadow: 2px 2px rgba(0, 0, 0, 0.075);
 	height:100%
 }
+
+.daily-card-container{
+	display: flex;
+}
