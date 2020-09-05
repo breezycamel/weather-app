@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import CurrentPanel from './components/CurrentPanel.js';
 import DailyPanel from './components/DailyPanel.js';
+import HourlyPanel from './components/HourlyPanel.js';
 
 function App() {
 	const weatherAPI_url_current = "http://api.openweathermap.org/data/2.5/weather?q="
@@ -8,8 +9,10 @@ function App() {
 	const [current, setCurrent] = useState();
 	const [gotCurrent, setGotCurrent] = useState(false)
 	const [daily, setDaily] = useState();
-	const [gotDaily, setGotDaily] = useState(false)
-	const [position, setPosition] = useState({});
+	const [gotDaily, setGotDaily] = useState(false);
+	const [hourly, setHourly] = useState();
+	const [gotHourly, setGotHourly] = useState();
+	const [position, setPosition] = useState();
 	const openWeatherAPIKey = process.env.REACT_APP_OPENWEATHERAPIKEY;
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(handleSucess,handleFailure);
@@ -37,8 +40,10 @@ function App() {
 					.then(data1 => {
 						console.log(data1);
 						setDaily(data1.daily);
-					})
-					.then(()=>setGotDaily(true));
+						setHourly(data1.hourly);
+						setGotDaily(true)
+						setGotHourly(true);
+					});
 			})
 			.then(()=>setGotCurrent(true));
 	}, []);
@@ -52,6 +57,10 @@ function App() {
 				<DailyPanel
 					daily={daily}
 					gotDaily={gotDaily}
+				/>
+				<HourlyPanel
+					hourly={hourly}
+					gotHourly={gotHourly}
 				/>
     	</div>
   	);

@@ -3,7 +3,7 @@ import DailyCard from './DailyCard.js';
 import {meterPerSecToMPH, convertKelvinToF} from '../util/util.js';
 import moment from 'moment';
 
-export default function CurrentPanel({daily, gotDaily}) {
+export default function DailyPanel({daily, gotDaily}) {
 	const [curIndex, setCurIndex] = useState(0);
 	if(!gotDaily){
 		return(
@@ -26,7 +26,7 @@ export default function CurrentPanel({daily, gotDaily}) {
 
 
 
-	console.log(daily[curIndex]);
+	//console.log(daily[curIndex]);
 
 	return (
 		<div className='daily-panel'>
