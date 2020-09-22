@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import CurrentPanel from './components/CurrentPanel.js';
 import DailyPanel from './components/DailyPanel.js';
 import HourlyPanel from './components/HourlyPanel.js';
-import SearchBar from './components/SearchBar.js';
+import TopNav from './components/TopNav.js';
 
 function App() {
 	const oneCallAPI_url = "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=current,minutely&appid={API_KEY}"
@@ -82,7 +82,7 @@ function App() {
 
 	return (
     	<div className="App">
-				<SearchBar
+				<TopNav
 					handleSearch={handleSearch}
 				/>
 				<div className='main'>
