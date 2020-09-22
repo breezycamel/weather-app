@@ -1,9 +1,9 @@
 import React, {useState}from 'react';
 import DailyCard from './DailyCard.js';
-import {meterPerSecToMPH, convertKelvinToF} from '../util/util.js';
+import {meterPerSecToMPH} from '../util/util.js';
 import moment from 'moment';
 
-export default function DailyPanel({daily, gotDaily}) {
+export default function DailyPanel({daily, gotDaily, convert}) {
 	const [curIndex, setCurIndex] = useState(0);
 	if(!gotDaily){
 		return(
@@ -12,15 +12,15 @@ export default function DailyPanel({daily, gotDaily}) {
 		)
 	}
 
-	const minTemp = convertKelvinToF(daily[curIndex].temp.min);
-	const maxTemp = convertKelvinToF(daily[curIndex].temp.max);
+	const minTemp = convert(daily[curIndex].temp.min);
+	const maxTemp = convert(daily[curIndex].temp.max);
 	const weatherImageURL = 'http://openweathermap.org/img/wn/{iconid}@2x.png'; 
 	const indexes = [0,1,2,3,4,5,6,7];
 	const date =  moment.parseZone(daily[curIndex].dt*1000);   
 	const windSpeed = meterPerSecToMPH(daily[curIndex].wind_speed);
 	const precipitation = daily[curIndex].pop*100;
 	const humidity = daily[curIndex].humidity;
-	const dewPoint = convertKelvinToF(daily[curIndex].dew_point);
+	const dewPoint = convert(daily[curIndex].dew_point);
 
 	function handleSelection(index){
 		setCurIndex(index);
@@ -54,6 +54,7 @@ export default function DailyPanel({daily, gotDaily}) {
 						data = {daily[i]}
 						isSelected = {i===curIndex}
 						onClick={() => setCurIndex(i)}
+						convert={convert}
 					/>
 				))}
 			</div>

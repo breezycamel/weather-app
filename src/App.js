@@ -3,6 +3,7 @@ import CurrentPanel from './components/CurrentPanel.js';
 import DailyPanel from './components/DailyPanel.js';
 import HourlyPanel from './components/HourlyPanel.js';
 import TopNav from './components/TopNav.js';
+import * as util from './util/util.js';
 
 function App() {
 	const oneCallAPI_url = "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=current,minutely&appid={API_KEY}"
@@ -14,8 +15,9 @@ function App() {
 	const [gotHourly, setGotHourly] = useState();
 	const [currentWeatherAPI, setCurrentWeatherAPI] = useState('');
 	const [toggleSearch, setToggleSearch] = useState(false);
+	const [isCelsius, setIsCelsius] = useState(false);
 	const openWeatherAPIKey = process.env.REACT_APP_OPENWEATHERAPIKEY;
-
+	const convert = (isCelsius)? util.convertKelvinToC : util.convertKelvinToF;
 
 	async function handleSearch(searchKey){
 		const searchTerms = searchKey.split(',');
@@ -84,21 +86,27 @@ function App() {
     	<div className="App">
 				<TopNav
 					handleSearch={handleSearch}
+					isCelsius={isCelsius}
+					setIsCelsius={setIsCelsius}
 				/>
 				<div className='main'>
 					<CurrentPanel
 						current={current}
 						gotCurrent={gotCurrent}
+						convert={convert}
 					/>
 					<DailyPanel
 						daily={daily}
 						gotDaily={gotDaily}
+						convert={convert}
 					/>
 					<HourlyPanel
 						hourly={hourly}
 						gotHourly={gotHourly}
+						convert={convert}
 					/>
 				</div>
+				<footer>dfa</footer>
     	</div>
   	);
 }

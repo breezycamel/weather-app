@@ -1,13 +1,12 @@
 import React from 'react'
-import {convertKelvinToF} from '../util/util.js';
 import moment from 'moment'
 
-export default function DailyCard({data, isSelected, onClick}) {
+export default function DailyCard({data, isSelected, onClick, convert}) {
 	const weatherImageURL = 'http://openweathermap.org/img/wn/';
 	const imageSize = '@2x.png';
 	const day = moment.parseZone(data.dt*1000);
-	const minTemp = convertKelvinToF(data.temp.min);
-	const maxTemp = convertKelvinToF(data.temp.max);
+	const minTemp = convert(data.temp.min);
+	const maxTemp = convert(data.temp.max);
 	return (
 		<div className={`card ${(isSelected)? 'selected':''}`} onClick={onClick}>
 			<p className='daily-card-day'>{day.format('ddd')}</p>

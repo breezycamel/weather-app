@@ -1,9 +1,9 @@
 import React, {useState}from 'react';
 import HourlyCard from './HourlyCard.js';
-import {meterPerSecToMPH, convertKelvinToF} from '../util/util.js';
+import {meterPerSecToMPH} from '../util/util.js';
 import moment from 'moment';
 
-export default function HourlyPanel({hourly, gotHourly}) {
+export default function HourlyPanel({hourly, gotHourly, convert}) {
 	const [curIndex, setCurIndex] = useState(0);
 	if(!gotHourly){
 		return(
@@ -12,14 +12,14 @@ export default function HourlyPanel({hourly, gotHourly}) {
 		)
 	}
 
-	const temperature = convertKelvinToF(hourly[curIndex].temp);
+	const temperature = convert(hourly[curIndex].temp);
 	const weatherImageURL = 'http://openweathermap.org/img/wn/{iconid}@2x.png'; 
 	const date =  moment.parseZone(hourly[curIndex].dt*1000);   
 	const windSpeed = meterPerSecToMPH(hourly[curIndex].wind_speed);
 	const precipitation = hourly[curIndex].pop*100;
 	const humidity = hourly[curIndex].humidity;
-	const dewPoint = convertKelvinToF(hourly[curIndex].dew_point);
-	const feelsLike = convertKelvinToF(hourly[curIndex].feels_like);
+	const dewPoint = convert(hourly[curIndex].dew_point);
+	const feelsLike = convert(hourly[curIndex].feels_like);
 
 	function handleSelection(index){
 		setCurIndex(index);
@@ -50,6 +50,7 @@ export default function HourlyPanel({hourly, gotHourly}) {
 						data = {hour}
 						isSelected = {i===curIndex}
 						onClick={() => setCurIndex(i)}
+						convert={convert}
 					/>
 				))}
 			</div>

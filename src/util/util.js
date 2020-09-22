@@ -5,3 +5,7 @@ export function meterPerSecToMPH(speed){
 export function convertKelvinToF(kelvin){
 	return (kelvin - 273.15) * 9/5 + 32;
 }
+
+export function convertKelvinToC(kelvin){
+	return kelvin - 273.15;
+}

@@ -1,12 +1,11 @@
 import React from 'react'
-import {convertKelvinToF} from '../util/util.js';
 import moment from 'moment'
 
-export default function HourlyCard({data, isSelected, onClick}) {
+export default function HourlyCard({data, isSelected, onClick, convert}) {
 	const weatherImageURL = 'http://openweathermap.org/img/wn/';
 	const imageSize = '@2x.png';
 	const day = moment.parseZone(data.dt*1000);
-	const temp = convertKelvinToF(data.temp);
+	const temp = convert(data.temp);
 	return (
 		<div className={`card ${(isSelected)? 'selected':''}`} onClick={onClick}>
 			<p className='hourly-card-day'>{day.format('ddd')}</p>
