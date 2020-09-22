@@ -24,9 +24,18 @@ export default function SearchBar({handleSearch}) {
 
 
 	return (
-		<div>
-			<input type='text' onChange={e => onChange(e)}/>
-			<button type="button" onClick={handleOnClick}>Search</button>
-		</div>
+		<nav>
+			<div className='nav-content'>
+				<h1 id='title'>Weather App</h1>
+			</div>
+			<div className='nav-content search-bar'>
+				<input type='text' size='30' onKeyPress={e=>{if(e.key=='Enter')handleOnClick();}} onChange={e => onChange(e)}/>
+				<button type="button" onClick={handleOnClick}>Search</button>
+			</div>
+			<div className='nav-content nav-placeholder'>
+
+			</div>
+			
+		</nav>
 	)
 }

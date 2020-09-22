@@ -5,7 +5,6 @@ import HourlyPanel from './components/HourlyPanel.js';
 import SearchBar from './components/SearchBar.js';
 
 function App() {
-	const weatherAPI_url_current = "http://api.openweathermap.org/data/2.5/weather?q="
 	const oneCallAPI_url = "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=current,minutely&appid={API_KEY}"
 	const [current, setCurrent] = useState();
 	const [gotCurrent, setGotCurrent] = useState(false)
@@ -67,7 +66,7 @@ function App() {
 				.then(res=> res.json())
 				.then(data => {
 					if(data.cod>='400'){
-						throw Error("Location not found");
+						throw Error("Location not found\nSearch format:\nZipcode: #####, {country}\nCity Name: {city name}, {state}, {country}\nState and country field are optional but will give better result.");
 					}
 					setCurrent(data);
 					console.log(data);
@@ -86,18 +85,20 @@ function App() {
 				<SearchBar
 					handleSearch={handleSearch}
 				/>
-				<CurrentPanel
-					current={current}
-					gotCurrent={gotCurrent}
-				/>
-				<DailyPanel
-					daily={daily}
-					gotDaily={gotDaily}
-				/>
-				<HourlyPanel
-					hourly={hourly}
-					gotHourly={gotHourly}
-				/>
+				<div className='main'>
+					<CurrentPanel
+						current={current}
+						gotCurrent={gotCurrent}
+					/>
+					<DailyPanel
+						daily={daily}
+						gotDaily={gotDaily}
+					/>
+					<HourlyPanel
+						hourly={hourly}
+						gotHourly={gotHourly}
+					/>
+				</div>
     	</div>
   	);
 }
