@@ -1,17 +1,20 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
 
 export default function TopNav({handleSearch, isCelsius, setIsCelsius}) {
 	const [searchKey, setSearchKey] = useState('');
 
+	//Handle on seach change
 	function onChange(e){
 		setSearchKey(e.target.value);
 	}
 
+	//Handle on temperature switch
 	function handleOnSwitch(toggle){
 		console.log(toggle);
 		setIsCelsius(toggle);
 	}
 
+	//Handle click event from search button
 	function handleOnClick(){
 		handleSearch(searchKey);
 	}
@@ -33,7 +36,7 @@ export default function TopNav({handleSearch, isCelsius, setIsCelsius}) {
 					<div id='fahrenheit' className={`conversion-option ${(isCelsius)? '':'selected'}`} onClick={()=>handleOnSwitch(false)}>
 						{'\u00B0F'}
 					</div>
-			</div>
+				</div>
 			</div>	
 		</div>
 	)

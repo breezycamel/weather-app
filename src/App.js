@@ -4,6 +4,8 @@ import DailyPanel from './components/DailyPanel.js';
 import HourlyPanel from './components/HourlyPanel.js';
 import TopNav from './components/TopNav.js';
 import * as util from './util/util.js';
+import Cookies from 'universal-cookie';
+import RecentLocationBar from './components/RecentLocationBar.js';
 
 function App() {
 	const oneCallAPI_url = "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=current,minutely&appid={API_KEY}"
@@ -14,18 +16,19 @@ function App() {
 	const [hourly, setHourly] = useState();
 	const [gotHourly, setGotHourly] = useState();
 	const [currentWeatherAPI, setCurrentWeatherAPI] = useState('');
-	const [toggleSearch, setToggleSearch] = useState(false);
 	const [isCelsius, setIsCelsius] = useState(false);
 	const openWeatherAPIKey = process.env.REACT_APP_OPENWEATHERAPIKEY;
 	const convert = (isCelsius)? util.convertKelvinToC : util.convertKelvinToF;
+	const cookie = new Cookies();
+	const [recentLocations, setRecentLocations] = useState(cookie.get('recentLocations'));
 
-	async function handleSearch(searchKey){
-		const searchTerms = searchKey.split(',');
+	function handleSearch(searchKey){
+		const searchTerms = searchKey.split(',').map(term => term.trim());
 		const isZip = Number.isInteger(Number.parseInt(searchTerms[0]));
 		console.log(searchTerms);
 		console.log(`Is Zipcode: ${isZip}`);
 		if(isZip){
-			setCurrentWeatherAPI(`http://api.openweathermap.org/data/2.5/weather?zip=${searchTerms[0]}&appid=${openWeatherAPIKey}`);
+			setCurrentWeatherAPI(`http://api.openweathermap.org/data/2.5/weather?zip=${searchTerms}&appid=${openWeatherAPIKey}`);
 		}
 		else{
 			setCurrentWeatherAPI(`http://api.openweathermap.org/data/2.5/weather?q=${searchTerms}&appid=${openWeatherAPIKey}`);
@@ -45,22 +48,62 @@ function App() {
 					});
 	}
 
+	//Ask user for current location
 	useEffect(() => {
-		navigator.geolocation.getCurrentPosition(handleSucess,handleFailure);
-		setToggleSearch(true);
+		navigator.geolocation.getCurrentPosition( res => {searchByCoordinate(res.coords.latitude, res.coords.longitude)}, handleFailure);
 	}, [])
 
-	const handleSucess = res =>{
-		const { latitude, longitude } = res.coords;
+	//Search for a location using coordinates
+	const searchByCoordinate = (latitude, longitude) =>{
 		setCurrentWeatherAPI(`http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openWeatherAPIKey}`);
-		console.log(res.coords);
+		console.log({latitude, longitude});
 	}
 
+	//Handle when geolocation fail
 	const handleFailure = res =>{
 		console.log('Failed');
 		setCurrentWeatherAPI(`http://api.openweathermap.org/data/2.5/weather?zip=08002,us&appid=${openWeatherAPIKey}`);
 	}
 
+	//Store recently searched location using cookies
+	const addRecentLocation = (location) => {
+		var date = new Date();
+		date.setFullYear(2030);
+		console.log(cookie.get('recentLocations'));
+		if(recentLocations == undefined){
+			cookie.set('recentLocations', JSON.stringify([location]), {path: '/', expires: date});
+			setRecentLocations([location]);
+			console.log(recentLocations);
+			return;
+		}
+		const filtered = recentLocations.filter((loc) => {
+			return (location.name==loc.name && Math.abs(location.lon-loc.lon)<1 && Math.abs(location.lat-loc.lat)<1);
+		});
+		if(filtered.length != 0) return;
+
+		var newLocations = recentLocations;
+		newLocations.push(location);
+		if(newLocations.length > 6){
+			newLocations.splice(0,1);
+			console.log("splice");
+		}
+		cookie.set('recentLocations', JSON.stringify(newLocations), {path: '/', expires: date});
+		setRecentLocations(newLocations);
+	}
+
+	//Delete a recently searched location from app state and cookies
+	const deleteRecentLocation = (location) => {
+		var date = new Date();
+		date.setFullYear(2030);
+		var newLocations = recentLocations;
+		newLocations = newLocations.filter((loc) => {
+			return (location.name!=loc.name || location.lon!=loc.lon || location.lat!=loc.lat);
+		});
+		cookie.set('recentLocations', JSON.stringify(newLocations), {path: '/', expires: date});
+		setRecentLocations(newLocations);
+	}
+
+	//This fetch current weather and then fetch daily and hourly weather
 	useEffect(() => {
 		console.log(currentWeatherAPI);
 		if(currentWeatherAPI != ''){
@@ -68,16 +111,16 @@ function App() {
 				.then(res=> res.json())
 				.then(data => {
 					if(data.cod>='400'){
-						throw Error("Location not found\nSearch format:\nZipcode: #####, {country}\nCity Name: {city name}, {state}, {country}\nState and country field are optional but will give better result.");
+						throw Error("Location not found\nSearch format:\nZipcode: #####, {country code}\nCity Name: {city name}, {state}, {country}\nState and country field are optional but will give better result.");
 					}
 					setCurrent(data);
 					console.log(data);
 					const lat = data.coord.lat;
 					const lon = data.coord.lon;
+					addRecentLocation({name: `${data.name}, ${data.sys.country}`, lat: lat, lon: lon});
 					fetchOneCallData(lat,lon);
 				})
 				.then(()=>setGotCurrent(true))
-				.then(()=>setToggleSearch(false))
 				.catch((error)=>window.alert(error.message));
 		}	
 	}, [currentWeatherAPI]);
@@ -88,6 +131,11 @@ function App() {
 					handleSearch={handleSearch}
 					isCelsius={isCelsius}
 					setIsCelsius={setIsCelsius}
+				/>
+				<RecentLocationBar
+					recentLocations={(recentLocations == undefined)? [] : recentLocations}
+					deleteRecentLocation={deleteRecentLocation}
+					selectRecentLocation={searchByCoordinate}
 				/>
 				<div className='main'>
 					<CurrentPanel
@@ -106,7 +154,6 @@ function App() {
 						convert={convert}
 					/>
 				</div>
-				<footer>dfa</footer>
     	</div>
   	);
 }

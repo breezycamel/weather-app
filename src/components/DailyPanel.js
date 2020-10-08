@@ -22,10 +22,6 @@ export default function DailyPanel({daily, gotDaily, convert}) {
 	const humidity = daily[curIndex].humidity;
 	const dewPoint = convert(daily[curIndex].dew_point);
 
-	function handleSelection(index){
-		setCurIndex(index);
-	}
-
 	//console.log(daily[curIndex]);
 
 	return (
@@ -36,7 +32,7 @@ export default function DailyPanel({daily, gotDaily, convert}) {
 			<div className='panel-main'>
 				<div className='panel-temperature-containter panel-content'>
 					<p className='panel-temperature'>{maxTemp.toFixed(0)+'\u00B0'+'/'+minTemp.toFixed(0)+'\u00B0'}</p>
-					<img src={weatherImageURL.replace('{iconid}', daily[curIndex].weather[0].icon)}/>
+					<img src={weatherImageURL.replace('{iconid}', daily[curIndex].weather[0].icon)} alt={daily[curIndex].weather[0].main}/>
 				</div>
 				<div className='panel-content'>
 					<p className='daily-precipitation'>Preciptiation: {precipitation.toFixed(0)}%</p>

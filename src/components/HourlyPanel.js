@@ -21,10 +21,6 @@ export default function HourlyPanel({hourly, gotHourly, convert}) {
 	const dewPoint = convert(hourly[curIndex].dew_point);
 	const feelsLike = convert(hourly[curIndex].feels_like);
 
-	function handleSelection(index){
-		setCurIndex(index);
-	}
-
 	return (
 		<div className='panel'>
 			<h1>Hourly Forecast</h1>
@@ -32,7 +28,7 @@ export default function HourlyPanel({hourly, gotHourly, convert}) {
 			<div className='panel-main'>
 				<div className='panel-temperature-containter panel-content'>
 					<p className='panel-temperature'>{temperature.toFixed(0)+'\u00B0'}</p>
-					<img src={weatherImageURL.replace('{iconid}', hourly[curIndex].weather[0].icon)}/>
+					<img src={weatherImageURL.replace('{iconid}', hourly[curIndex].weather[0].icon)} alt={hourly[curIndex].weather[0].main}/>
 				</div>
 				<div className='panel-content'>
 					<p>Feels Like: {feelsLike.toFixed(0)+'\u00B0'}</p>

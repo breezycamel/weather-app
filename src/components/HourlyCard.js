@@ -10,7 +10,7 @@ export default function HourlyCard({data, isSelected, onClick, convert}) {
 		<div className={`card ${(isSelected)? 'selected':''}`} onClick={onClick}>
 			<p className='hourly-card-day'>{day.format('ddd')}</p>
 			<p>{day.format('LT')}</p>
-			<img className='card-image' src={weatherImageURL+data.weather[0].icon+imageSize}/>
+			<img className='card-image' src={weatherImageURL+data.weather[0].icon+imageSize} alt={data.weather[0].main}/>
 			<p className='hourly-card-temperature'>{temp.toFixed(0)+'\u00B0'}</p>
 		</div>
 	);
