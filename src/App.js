@@ -62,7 +62,7 @@ function App() {
 	//Handle when geolocation fail
 	const handleFailure = res =>{
 		console.log('Failed');
-		setCurrentWeatherAPI(`http://api.openweathermap.org/data/2.5/weather?zip=08002,us&appid=${openWeatherAPIKey}`);
+		setCurrentWeatherAPI(`https://api.openweathermap.org/data/2.5/weather?zip=08002,us&appid=${openWeatherAPIKey}`);
 	}
 
 	//Store recently searched location using cookies
