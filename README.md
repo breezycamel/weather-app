@@ -1,68 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Weather App
 
-## Available Scripts
+#### Inspiration
 
-In the project directory, you can run:
+How many times have you wondered: What's the weather like today? tomorow? this week? For me it's a lot! Everytime I go outside, I check the weather. That's why for my first project I decided to build an app that displays the weather forecasts. I wanted to build something I can use and look at everyday. The app's features are inpsired by Google Weather and The Weather Channel.
 
-### `yarn start`
+#### What the app does
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This app allows users to check weather forcasts by locations. Users can search for a location by city name or zipcode. The app stores 6 most recently searched locations for easy access. The app also uses geolocation to show the weather in the user's current location.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+There are 3 main panels showing current, daily, and hourly forecast. The daily and hourly panel contains daily and hourly weather "cards", each displaying temperature and a weather icons. Selecting a card will show more information about the weather on that day or hour in the panel.
 
-### `yarn test`
+#### How I Build It
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This app was build with React with functional components and React Hooks. I used OpenWeather API for data and weather icons.
 
-### `yarn build`
+I divided the each into unique components. I believed this is right choice because the data for each type of forecast is quite different so a generic panel component might not work well. 
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+I also tried my best to make the app responsive by resizing certain components for different screen sizes and using rem to size everything.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+#### Limitations
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+OpenWeather API's data does not specify the state that a city belongs to. For example, query for "columbus, oh, us" and "columbus, ga, us" will give correct weather data for each city but the city name returned is just "Columbus, US". This gets confusing when the locations is stored in recently seached locations bar as both location are now indistinguishable from one another.
 
-### `yarn eject`
+There are not autocomplete for location searches. User might forget how to spell the name of a city or enter incorrect search format.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### What's Next
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Google's Places API can be used for both autocomplete and storing location name. Seaches can be validated with Places API and the coordinates can be obtained. The app can then interact with OpenWeather API using only coordinates for better results. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
