@@ -28,10 +28,10 @@ function App() {
 		console.log(searchTerms);
 		console.log(`Is Zipcode: ${isZip}`);
 		if(isZip){
-			setCurrentWeatherAPI(`http://api.openweathermap.org/data/2.5/weather?zip=${searchTerms}&appid=${openWeatherAPIKey}`);
+			setCurrentWeatherAPI(`https://api.openweathermap.org/data/2.5/weather?zip=${searchTerms}&appid=${openWeatherAPIKey}`);
 		}
 		else{
-			setCurrentWeatherAPI(`http://api.openweathermap.org/data/2.5/weather?q=${searchTerms}&appid=${openWeatherAPIKey}`);
+			setCurrentWeatherAPI(`https://api.openweathermap.org/data/2.5/weather?q=${searchTerms}&appid=${openWeatherAPIKey}`);
 		}
 	}
 
@@ -55,7 +55,7 @@ function App() {
 
 	//Search for a location using coordinates
 	const searchByCoordinate = (latitude, longitude) =>{
-		setCurrentWeatherAPI(`http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openWeatherAPIKey}`);
+		setCurrentWeatherAPI(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openWeatherAPIKey}`);
 		console.log({latitude, longitude});
 	}
 
