@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 
 export default function HourlyCard({data, isSelected, onClick, convert}) {
-	const weatherImageURL = 'http://openweathermap.org/img/wn/';
+	const weatherImageURL = 'https://openweathermap.org/img/wn/';
 	const imageSize = '@2x.png';
 	const day = moment.parseZone(data.dt*1000);
 	const temp = convert(data.temp);

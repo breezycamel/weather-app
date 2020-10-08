@@ -14,7 +14,7 @@ export default function DailyPanel({daily, gotDaily, convert}) {
 
 	const minTemp = convert(daily[curIndex].temp.min);
 	const maxTemp = convert(daily[curIndex].temp.max);
-	const weatherImageURL = 'http://openweathermap.org/img/wn/{iconid}@2x.png'; 
+	const weatherImageURL = 'https://openweathermap.org/img/wn/{iconid}@2x.png'; 
 	const indexes = [0,1,2,3,4,5,6,7];
 	const date =  moment.parseZone(daily[curIndex].dt*1000);   
 	const windSpeed = meterPerSecToMPH(daily[curIndex].wind_speed);

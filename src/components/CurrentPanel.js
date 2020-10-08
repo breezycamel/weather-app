@@ -10,7 +10,7 @@ export default function CurrentPanel({current, gotCurrent, convert}) {
 		)
 	}
 
-	const weatherImageURL = 'http://openweathermap.org/img/wn/';
+	const weatherImageURL = 'https://openweathermap.org/img/wn/';
 	const imageSize = '@2x.png';
 	const time = moment.parseZone(current.dt*1000);
 	const temp = convert(current.main.temp);

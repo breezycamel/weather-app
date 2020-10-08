@@ -13,7 +13,7 @@ export default function HourlyPanel({hourly, gotHourly, convert}) {
 	}
 
 	const temperature = convert(hourly[curIndex].temp);
-	const weatherImageURL = 'http://openweathermap.org/img/wn/{iconid}@2x.png'; 
+	const weatherImageURL = 'https://openweathermap.org/img/wn/{iconid}@2x.png'; 
 	const date =  moment.parseZone(hourly[curIndex].dt*1000);   
 	const windSpeed = meterPerSecToMPH(hourly[curIndex].wind_speed);
 	const precipitation = hourly[curIndex].pop*100;
