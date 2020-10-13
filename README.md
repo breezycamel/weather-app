@@ -1,12 +1,14 @@
 ## Weather App
 
+Live version [here](https://breezycamel.github.io/weather-app/)
+
 #### Inspiration
 
 How many times have you wondered: What's the weather like today? tomorow? this week? For me it's a lot! Everytime I go outside, I check the weather. That's why for my first project I decided to build an app that displays the weather forecasts. I wanted to build something I can use and look at everyday. The app's features are inpsired by Google Weather and The Weather Channel.
 
 #### What the app does
 
-This app allows users to check weather forcasts by locations. Users can search for a location by city name or zipcode. The app stores 6 most recently searched locations for easy access. The app also uses geolocation to show the weather in the user's current location.
+This app allows users to check weather forcasts by locations. Users can search for a location by city name or zipcode. The app stores 6 most recently searched locations for easy access. The app also uses geolocation to show the weather in a user's current location.
 
 There are 3 main panels showing current, daily, and hourly forecast. The daily and hourly panel contains daily and hourly weather "cards", each displaying temperature and a weather icons. Selecting a card will show more information about the weather on that day or hour in the panel.
 
@@ -14,7 +16,7 @@ There are 3 main panels showing current, daily, and hourly forecast. The daily a
 
 This app was build with React with functional components and React Hooks. I used OpenWeather API for data and weather icons.
 
-I divided the each into unique components. I believed this is right choice because the data for each type of forecast is quite different so a generic panel component might not work well. 
+I divided the each panel into unique components. I believed this is right choice because the data for each type of forecast is quite different so a generic panel component might not work well. 
 
 I also tried my best to make the app responsive by resizing certain components for different screen sizes and using rem to size everything.
 
