@@ -25,8 +25,8 @@ function App() {
 	function handleSearch(searchKey){
 		const searchTerms = searchKey.split(',').map(term => term.trim());
 		const isZip = Number.isInteger(Number.parseInt(searchTerms[0]));
-		console.log(searchTerms);
-		console.log(`Is Zipcode: ${isZip}`);
+		//console.log(searchTerms);
+		//console.log(`Is Zipcode: ${isZip}`);
 		if(isZip){
 			setCurrentWeatherAPI(`https://api.openweathermap.org/data/2.5/weather?zip=${searchTerms}&appid=${openWeatherAPIKey}`);
 		}
@@ -40,7 +40,7 @@ function App() {
 				fetch(url)
 					.then(res=>res.json())
 					.then(data1 => {
-						console.log(data1);
+						//console.log(data1);
 						setDaily(data1.daily);
 						setHourly(data1.hourly);
 						setGotDaily(true)
@@ -56,12 +56,12 @@ function App() {
 	//Search for a location using coordinates
 	const searchByCoordinate = (latitude, longitude) =>{
 		setCurrentWeatherAPI(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openWeatherAPIKey}`);
-		console.log({latitude, longitude});
+		//console.log({latitude, longitude});
 	}
 
 	//Handle when geolocation fail
 	const handleFailure = res =>{
-		console.log('Failed');
+		//console.log('Failed');
 		setCurrentWeatherAPI(`https://api.openweathermap.org/data/2.5/weather?zip=08002,us&appid=${openWeatherAPIKey}`);
 	}
 
@@ -69,11 +69,11 @@ function App() {
 	const addRecentLocation = (location) => {
 		var date = new Date();
 		date.setFullYear(2030);
-		console.log(cookie.get('recentLocations'));
+		//console.log(cookie.get('recentLocations'));
 		if(recentLocations == undefined){
 			cookie.set('recentLocations', JSON.stringify([location]), {path: '/', expires: date});
 			setRecentLocations([location]);
-			console.log(recentLocations);
+			//console.log(recentLocations);
 			return;
 		}
 		const filtered = recentLocations.filter((loc) => {
@@ -85,7 +85,7 @@ function App() {
 		newLocations.push(location);
 		if(newLocations.length > 6){
 			newLocations.splice(0,1);
-			console.log("splice");
+			//console.log("splice");
 		}
 		cookie.set('recentLocations', JSON.stringify(newLocations), {path: '/', expires: date});
 		setRecentLocations(newLocations);
@@ -105,7 +105,7 @@ function App() {
 
 	//This fetch current weather and then fetch daily and hourly weather
 	useEffect(() => {
-		console.log(currentWeatherAPI);
+		//console.log(currentWeatherAPI);
 		if(currentWeatherAPI != ''){
 			fetch(currentWeatherAPI)
 				.then(res=> res.json())
@@ -114,7 +114,7 @@ function App() {
 						throw Error("Location not found\nSearch format:\nZipcode: #####, {country code}\nCity Name: {city name}, {state}, {country}\nState and country field are optional but will give better result.");
 					}
 					setCurrent(data);
-					console.log(data);
+					//console.log(data);
 					const lat = data.coord.lat;
 					const lon = data.coord.lon;
 					addRecentLocation({name: `${data.name}, ${data.sys.country}`, lat: lat, lon: lon});
