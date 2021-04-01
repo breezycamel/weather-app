@@ -1,6 +1,6 @@
 ## Weather App
 
-Live version [here](https://breezycamel.github.io/weather-app/)
+Live version [here](https://phh18.github.io/weather-app/)
 
 #### Inspiration
 
